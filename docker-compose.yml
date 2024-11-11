@@ -1,0 +1,33 @@
+yaml
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      - DB_USER=postgres
+      - DB_PASSWORD=your_password
+      - DB_NAME=task_manager
+      - DB_HOST=db
+
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+
+      POSTGRES_PASSWORD: your_password
+      POSTGRES_DB: task_manager
+    ports:
+      - "5432:5432"
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "8080:80"
